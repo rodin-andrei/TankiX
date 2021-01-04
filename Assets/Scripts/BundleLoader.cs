@@ -9,8 +9,8 @@ public class BundleLoader
     private  readonly string dbPath = "/../../tankix_Data/db.json";
     private  readonly string bDirPath = "/../../tankix_Data/AssetBundlesCache/StandaloneWindows/";
 
-    private BundleDb db;
-    private readonly Dictionary<BundleInfo, AssetBundle> loadedBundles = new Dictionary<BundleInfo, AssetBundle>();
+    public  BundleDb db;
+    public readonly Dictionary<BundleInfo, AssetBundle> loadedBundles = new Dictionary<BundleInfo, AssetBundle>();
 
     public void init()
     {
@@ -25,17 +25,16 @@ public class BundleLoader
 
         foreach (BundleInfo bundleInfo in this.db.bundles)
         {
-            AssetBundle assetBundle = loadAssetBundle(bundleInfo);
+            AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath
+                + bDirPath
+                + bundleInfo.bundleName
+                + "_" + Utils.longToHex(bundleInfo.crc)
+                + ".bundle"); ;
+            
             this.loadedBundles.Add(bundleInfo, assetBundle);
         }
     }
    
-    private  AssetBundle loadAssetBundle(BundleInfo bundleInfo)
-    {
-        return AssetBundle.LoadFromFile(Application.dataPath + bDirPath
-            + bundleInfo.bundleName + "_" + Utils.longToHex(bundleInfo.crc) + ".bundle");
-    }
-
     public void loadDependencies(BundleInfo _bundleInfo)
     {
         string[] dependenciesNames = _bundleInfo.dependenciesNames;
