@@ -12,9 +12,7 @@ using UnityEngine.UI;
 public class NewBehaviourScript : MonoBehaviour
 {
 	
-    private AssetBundle selectedAssetBundle;
-	private BundleInfo selectedBundlenfo;
-
+    
     public GameObject buttonPrefab;
     public GameObject mapSelectorView;
 
@@ -26,8 +24,8 @@ public class NewBehaviourScript : MonoBehaviour
         this.bundleLoader.init();
 
         List<AssetBundle> list=  findScenes();
-        this.selectedAssetBundle = list[0];
-        loadScene(selectedBundlenfo);
+        
+        loadScene(list[0]);
     }
 
     private List<AssetBundle> findScenes()
@@ -38,8 +36,8 @@ public class NewBehaviourScript : MonoBehaviour
                 if (bundle.isStreamedSceneAssetBundle)
                     Debug.Log(bundle.name);
                 return bundle.isStreamedSceneAssetBundle;
-                })
-                .Where(bundle => bundle.name.Contains("silencemoo"))
+            })
+            .Where(bundle => bundle.name.Contains("arag"))
             .ToList();
     }
 
@@ -48,11 +46,11 @@ public class NewBehaviourScript : MonoBehaviour
        
     }
 
-    private void loadScene(BundleInfo _bundleInfo)
+    private void loadScene(AssetBundle assetBundle)
     {
      
-        string[] scenePaths = selectedAssetBundle.GetAllScenePaths();
-       foreach(string scenePath in scenePaths)
+        string[] scenePaths = assetBundle.GetAllScenePaths();
+        foreach(string scenePath in scenePaths)
         {
             Debug.Log(scenePath);
         }

@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Loader : MonoBehaviour
+public class Test : MonoBehaviour
 {
 	private static readonly string dbPath = "/../../tankix_Data/db.json";
 
@@ -36,7 +36,7 @@ public class Loader : MonoBehaviour
 	{
 		try
 		{
-			this.db = JsonUtility.FromJson<BundleDb>(File.ReadAllText(UnityEngine.Application.dataPath + Loader.dbPath));
+			this.db = JsonUtility.FromJson<BundleDb>(File.ReadAllText(UnityEngine.Application.dataPath + dbPath));
 		}
 		catch
 		{
@@ -191,7 +191,7 @@ public class Loader : MonoBehaviour
 		{
 			try
 			{
-				this.loadedBundles.Add(bundle, AssetBundle.LoadFromMemory(File.ReadAllBytes(string.Format("{0}/{1}_{2}.bundle", Application.dataPath + Loader.bDirPath, bundle.bundleName, bundle.crc.ToString("x8")))));
+				this.loadedBundles.Add(bundle, AssetBundle.LoadFromMemory(File.ReadAllBytes(string.Format("{0}/{1}_{2}.bundle", Application.dataPath + bDirPath, bundle.bundleName, bundle.crc.ToString("x8")))));
 			}
 			catch (Exception message)
 			{
