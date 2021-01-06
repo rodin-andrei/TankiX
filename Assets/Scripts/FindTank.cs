@@ -11,13 +11,13 @@ public class FindTank : MonoBehaviour {
         Dictionary<string, HashSet<string>> map = new Dictionary<string, HashSet<string>>();
 
         BundleLoader bundleLoader = new BundleLoader();
-        bundleLoader.init();
+        bundleLoader.Init();
         getStatistic(map, bundleLoader);
         extraxt(map, bundleLoader);
     }
 
     private static void extraxt(Dictionary<string, HashSet<string>> map, BundleLoader bundleLoader) {
-        bundleLoader.getLoadedAssetBundles()
+        bundleLoader.GetLoadedAssetBundles()
                     .Where(bundle => bundle != null && !bundle.isStreamedSceneAssetBundle)
                     .Take(40)
                     .ToList()
@@ -33,7 +33,7 @@ public class FindTank : MonoBehaviour {
                     });
     }
         private static void getStatistic(Dictionary<string, HashSet<string>> map, BundleLoader bundleLoader) {
-        bundleLoader.getLoadedAssetBundles()
+        bundleLoader.GetLoadedAssetBundles()
                     .Where(bundle => bundle != null && !bundle.isStreamedSceneAssetBundle)
                     .Take(40)
                     .ToList()

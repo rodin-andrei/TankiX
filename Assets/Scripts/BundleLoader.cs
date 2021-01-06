@@ -10,9 +10,9 @@ public class BundleLoader
     private  readonly string bDirPath = "/../../tankix_Data/AssetBundlesCache/StandaloneWindows/";
 
     public  BundleDb db;
-    public readonly Dictionary<BundleInfo, AssetBundle> loadedBundles = new Dictionary<BundleInfo, AssetBundle>();
+    public readonly Dictionary<string, AssetBundle> loadedBundles = new Dictionary<string, AssetBundle>();
 
-    public void init()
+    public void Init()
     {
         try
         {
@@ -26,39 +26,21 @@ public class BundleLoader
         foreach (BundleInfo bundleInfo in this.db.bundles)
         {
             AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath
-                + bDirPath
+                + this.bDirPath
                 + bundleInfo.bundleName
                 + "_" + Utils.longToHex(bundleInfo.crc)
                 + ".bundle"); ;
             
-            this.loadedBundles.Add(bundleInfo, assetBundle);
+            this.loadedBundles.Add(bundleInfo.bundleName, assetBundle);
         }
     }
-   
-    public void loadDependencies(BundleInfo _bundleInfo)
+ 
+    public List<AssetBundle> GetLoadedAssetBundles()
     {
-        string[] dependenciesNames = _bundleInfo.dependenciesNames;
-        foreach (string depenedencyName in dependenciesNames)
-        {
-            foreach (BundleInfo bundleInfo in this.db.bundles)
-            {
-                if (bundleInfo.bundleName == depenedencyName)
-                {
-                    AssetBundle assetBundle = this.loadedBundles[bundleInfo];
-                    if (assetBundle == null)
-                    {
-                        UnityEngine.Debug.LogError("Bundle null");
-                        continue;
-                    }
-
-                    UnityEngine.Object[] objects = assetBundle.LoadAllAssets();
-                }
-            }
-        }
+        return this.loadedBundles.Values.ToList<AssetBundle>();
     }
 
-    public List<AssetBundle> getLoadedAssetBundles()
-    {
-        return loadedBundles.Values.ToList<AssetBundle>();
+    public AssetBundle getLoadedBundleByName(string name) {
+        return this.loadedBundles[name];
     }
 }

@@ -12,7 +12,7 @@ namespace Assets.Scripts.extractor.impl {
             TextureImporter tImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
             Debug.Log(tImporter == null);
             if (tImporter != null) {
-                tImporter.textureType = TextureImporterType.Advanced;
+                tImporter.textureType = TextureImporterType.Default;
 
                 tImporter.isReadable = true;
 

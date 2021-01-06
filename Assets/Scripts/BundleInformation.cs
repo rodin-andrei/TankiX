@@ -4,20 +4,18 @@ using System.Linq;
 using UnityEngine;
 
 public class BundleInformation : MonoBehaviour {
-
-	// Use this for initialization
 	void Start ()
     {
         BundleLoader bundleLoader = new BundleLoader();
-        bundleLoader.init();
-        //checkAssetsInScreamBundle(bundleLoader);
-        //checkValidJsonData(bundleLoader);
+        bundleLoader.Init();
+        CheckAssetsInScreamBundle(bundleLoader);
+        CheckValidJsonData(bundleLoader);
 
     }
 
-    private static void checkValidJsonData(BundleLoader bundleLoader)
+    private static void CheckValidJsonData(BundleLoader bundleLoader)
     {
-        int count = bundleLoader.getLoadedAssetBundles()
+        int count = bundleLoader.GetLoadedAssetBundles()
             .Where(assetBundle => assetBundle != null)
             .Where(assetBundle =>
             {
@@ -34,7 +32,7 @@ public class BundleInformation : MonoBehaviour {
         Debug.Log(count);
     }
 
-    private static void checkAssetsInScreamBundle(BundleLoader bundleLoader)
+    private static void CheckAssetsInScreamBundle(BundleLoader bundleLoader)
     {
         bool v = bundleLoader.db.bundles.Length == bundleLoader.loadedBundles.Keys.Count;
         Debug.Log(v);
