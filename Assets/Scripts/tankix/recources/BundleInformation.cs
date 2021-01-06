@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public class BundleInformation : MonoBehaviour {
-	void Start ()
+	void Start()
     {
         BundleLoader bundleLoader = new BundleLoader();
         bundleLoader.Init();

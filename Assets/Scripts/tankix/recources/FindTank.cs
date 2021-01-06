@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.extractor.impl;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,7 +26,7 @@ public class FindTank : MonoBehaviour {
                         .ForEach(assetName => {
                             Object asset = bundle.LoadAsset(assetName);
                             if (assetName.Split('.').Last().Equals("png")&& asset as UnityEngine.Texture2D) {
-                                new Texture2DToPngExtractorRecourses().extraxt(asset, assetName);
+                                
                             }
                         });
                     });
