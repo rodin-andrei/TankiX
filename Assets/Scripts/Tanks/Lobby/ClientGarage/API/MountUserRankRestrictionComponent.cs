@@ -1,0 +1,6 @@
+namespace Tanks.Lobby.ClientGarage.API
+{
+	public class MountUserRankRestrictionComponent : AbstractRestrictionComponent
+	{
+	}
+}
