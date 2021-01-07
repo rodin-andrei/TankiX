@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class BundleLoader
 {
-    private  readonly string dbPath = "D:/Танки Х/TankiX (1) REMAKE/TankiX/tankix_Data/db.json";
-    private  readonly string bDirPath = "D:/Танки Х/TankiX (1) REMAKE/TankiX/tankix_Data/AssetBundlesCache/StandaloneWindows/";
+    private readonly string dbPath = "/../../tankix_Data/db.json";
+    private readonly string bDirPath = "/../../tankix_Data/AssetBundlesCache/StandaloneWindows/";
 
     public  BundleDb db;
     public readonly Dictionary<string, AssetBundle> loadedBundles = new Dictionary<string, AssetBundle>();
@@ -16,7 +16,7 @@ public class BundleLoader
     {
         try
         {
-            this.db = JsonUtility.FromJson<BundleDb>(File.ReadAllText(this.dbPath));
+            this.db = JsonUtility.FromJson<BundleDb>(File.ReadAllText(Application.dataPath + this.dbPath));
         }
         catch
         {
@@ -25,8 +25,9 @@ public class BundleLoader
 
         foreach (BundleInfo bundleInfo in this.db.bundles)
         {
-            AssetBundle assetBundle = AssetBundle.LoadFromFile(this.bDirPath
-                + bundleInfo.bundleName
+            AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath
+               + this.bDirPath
+               + bundleInfo.bundleName
                 + "_" + Utils.longToHex(bundleInfo.crc)
                 + ".bundle"); ;
             
