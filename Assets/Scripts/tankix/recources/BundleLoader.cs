@@ -37,7 +37,9 @@ public class BundleLoader
  
     public List<AssetBundle> GetLoadedAssetBundles()
     {
-        return this.loadedBundles.Values.ToList<AssetBundle>();
+        return this.loadedBundles.Values
+            .Where(bundle => bundle!=null)
+            .ToList<AssetBundle>();
     }
 
     public AssetBundle getLoadedBundleByName(string name) {
