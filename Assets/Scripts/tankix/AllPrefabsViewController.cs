@@ -51,6 +51,7 @@ public class AllPrefabsViewController : MonoBehaviour {
 			i++;
 			this.names = this.bundleLoader.loadedBundles[this.bundleLoader.loadedBundles.Keys.ToList()[i]].AllAssetNames()
 				.Where(name => name.EndsWith(".prefab"))
+				.Where(name => name.Contains("hull") || name.Contains("turret"))
 				.ToList();
 			if (names.Count == 0) return nextPrefab();
 			Debug.Log("Update names count" + this.names.Count);
