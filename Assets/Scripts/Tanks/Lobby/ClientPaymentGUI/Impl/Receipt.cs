@@ -1,0 +1,109 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Tanks.Lobby.ClientControls.API;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Tanks.Lobby.ClientPaymentGUI.Impl
+{
+	public class Receipt : LocalizedControl
+	{
+		[SerializeField]
+		private Text price;
+
+		[SerializeField]
+		private Text total;
+
+		private long totalValue;
+
+		[SerializeField]
+		private ReceiptItem receiptItemPrefab;
+
+		[SerializeField]
+		private RectTransform receiptItemsContainer;
+
+		[SerializeField]
+		private Text priceLabel;
+
+		[SerializeField]
+		private GameObject totalObject;
+
+		[SerializeField]
+		private Text specialOfferText;
+
+		[SerializeField]
+		private Text totalLabel;
+
+		public Dictionary<object, object> Lines
+		{
+			get;
+			set;
+		}
+
+		public virtual string PriceLabel
+		{
+			set
+			{
+				priceLabel.text = value;
+			}
+		}
+
+		public virtual string TotalLabel
+		{
+			set
+			{
+				totalLabel.text = value;
+			}
+		}
+
+		public void SetPrice(double price, string currency)
+		{
+			this.price.text = price.ToStringSeparatedByThousands() + " " + currency;
+		}
+
+		public void AddSpecialOfferText(string text)
+		{
+			specialOfferText.gameObject.SetActive(true);
+			specialOfferText.text = text;
+		}
+
+		public void AddItem(string name, long amount)
+		{
+			totalObject.SetActive(true);
+			ReceiptItem receiptItem = UnityEngine.Object.Instantiate(receiptItemPrefab);
+			receiptItem.Init(name, amount);
+			receiptItem.transform.SetParent(receiptItemsContainer, false);
+			totalValue += amount;
+			total.text = totalValue.ToStringSeparatedByThousands();
+		}
+
+		private void OnDisable()
+		{
+			totalValue = 0L;
+			IEnumerator enumerator = receiptItemsContainer.GetEnumerator();
+			try
+			{
+				while (enumerator.MoveNext())
+				{
+					Transform transform = (Transform)enumerator.Current;
+					if (transform != specialOfferText.transform)
+					{
+						UnityEngine.Object.Destroy(transform.gameObject);
+					}
+				}
+			}
+			finally
+			{
+				IDisposable disposable;
+				if ((disposable = enumerator as IDisposable) != null)
+				{
+					disposable.Dispose();
+				}
+			}
+			totalObject.SetActive(false);
+			specialOfferText.gameObject.SetActive(false);
+			specialOfferText.text = string.Empty;
+		}
+	}
+}
